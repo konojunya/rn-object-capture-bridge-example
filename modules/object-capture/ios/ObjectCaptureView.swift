@@ -103,9 +103,9 @@ struct ObjectCaptureContentView: View {
               }
               .buttonStyle(.bordered)
 
-              if case .completing = session.state {
+              if case .finishing = session.state {
                 // Session is finishing, no additional buttons needed
-              } else if case .finished = session.state {
+              } else if case .completed = session.state {
                 // Will auto-transition to reconstruction
               }
             }
