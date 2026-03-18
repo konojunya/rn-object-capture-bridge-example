@@ -16,7 +16,7 @@ export default function HomeScreen() {
       const modelPath = await startCapture();
       router.push({ pathname: "/viewer", params: { modelPath } });
     } catch (error: any) {
-      if (error?.code === "ERR_CANCELLED") {
+      if (error?.code === "ERR_CAPTURE_CANCELLED") {
         // ユーザーキャンセル、何もしない
         return;
       }
