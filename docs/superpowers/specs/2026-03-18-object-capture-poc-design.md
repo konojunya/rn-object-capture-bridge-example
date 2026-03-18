@@ -36,17 +36,19 @@ rn-object-capture-bridge-example/
 │   └── viewer.tsx                # ビューア画面
 ├── modules/
 │   ├── object-capture/           # Expo Module: スキャン
+│   │   ├── package.json
+│   │   ├── expo-module.config.json
 │   │   ├── index.ts              # JS API
-│   │   ├── src/
-│   │   │   ├── ObjectCaptureModule.swift  # Expo Module 定義、startCapture() の実装
-│   │   │   └── ObjectCaptureView.swift    # SwiftUI ビュー（ObjectCaptureSession のUI + 再構成処理）
-│   │   └── expo-module.config.json
+│   │   └── ios/
+│   │       ├── ObjectCaptureModule.swift  # Expo Module 定義、startCapture() の実装
+│   │       └── ObjectCaptureView.swift    # SwiftUI ビュー（ObjectCaptureSession のUI + 再構成処理）
 │   └── model-viewer/             # Expo Module: USDZ ビューア
+│       ├── package.json
+│       ├── expo-module.config.json
 │       ├── index.ts              # JS API
-│       ├── src/
-│       │   ├── ModelViewerModule.swift
-│       │   └── ModelViewerView.swift
-│       └── expo-module.config.json
+│       └── ios/
+│           ├── ModelViewerModule.swift
+│           └── ModelViewerView.swift
 ├── app.json
 ├── package.json
 └── tsconfig.json
