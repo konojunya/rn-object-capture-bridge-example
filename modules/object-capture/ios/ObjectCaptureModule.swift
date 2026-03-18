@@ -2,25 +2,25 @@ import ExpoModulesCore
 import SwiftUI
 import RealityKit
 
-class NotSupportedException: Exception {
+class NotSupportedException: Exception, @unchecked Sendable {
   override var reason: String {
     "Object Capture is not supported on this device. Requires iOS 17+ and LiDAR."
   }
 }
 
-class PresentationFailedException: Exception {
+class PresentationFailedException: Exception, @unchecked Sendable {
   override var reason: String {
     "Could not find a view controller to present from"
   }
 }
 
-class CaptureFailedException: GenericException<String> {
+class CaptureFailedException: GenericException<String>, @unchecked Sendable {
   override var reason: String {
     "Capture failed: \(param)"
   }
 }
 
-class CaptureCancelledException: Exception {
+class CaptureCancelledException: Exception, @unchecked Sendable {
   override var reason: String {
     "Capture was cancelled by the user"
   }
@@ -32,14 +32,19 @@ public class ObjectCaptureModule: Module {
 
     AsyncFunction("isSupported") { () -> Bool in
       if #available(iOS 17.0, *) {
-        return ObjectCaptureSession.isSupported
+        return await MainActor.run {
+          ObjectCaptureSession.isSupported
+        }
       }
       return false
     }
 
     AsyncFunction("startCapture") { (promise: Promise) in
       if #available(iOS 17.0, *) {
-        guard ObjectCaptureSession.isSupported else {
+        let supported = await MainActor.run {
+          ObjectCaptureSession.isSupported
+        }
+        guard supported else {
           promise.reject(NotSupportedException())
           return
         }
